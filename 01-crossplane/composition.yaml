@@ -21,7 +21,7 @@ spec:
       resources:
       - name: postgresql-database
         base:
-          apiVersion: ostgresql.sql.crossplane.io/v1alpha
+          apiVersion: postgresql.sql.crossplane.io/v1alpha
           kind: Database
           spec:
             forProvider: {}
