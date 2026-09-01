@@ -30,8 +30,8 @@ spec:
                   name: postgresql-config
             patches:
               - type: FromCompositeFieldPath
-                fromFieldPath: "spec.forProvider.dbName"
+                fromFieldPath: "spec.parameters.dbName"
                 toFieldPath: "spec.forProvider.dbName"
               - type: FromCompositeFieldPath
-                fromFieldPath: "spec.forProvider.owner"
+                fromFieldPath: "spec.parameters.owner"
                 toFieldPath: "spec.forProvider.owner"
