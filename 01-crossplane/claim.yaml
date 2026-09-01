@@ -9,7 +9,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "3"
 spec:
-  forProvider:
+  parameters:
     dbName: appdb-v2
     owner: devteam
   writeConnectionSecretToRef:
