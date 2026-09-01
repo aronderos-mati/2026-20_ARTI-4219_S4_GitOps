@@ -36,4 +36,4 @@ spec:
           # Patch para el nombre de la BD
           - type: FromCompositeFieldPath
             fromFieldPath: "spec.parameters.dbName"
-            toFieldPath: "metadata.annotations[crossplane.io/external-name]"
+            toFieldPath: "spec.forProvider.dbName"

@@ -15,17 +15,15 @@
 apiVersion: apiextensions.crossplane.io/v1
 kind: CompositeResourceDefinition
 metadata:
-  name: mydatabases.database.poc.io
+  name: xpostgresqlinstances.database.poc.io
   annotations:
     argocd.argoproj.io/sync-wave: "1"
 spec:
   group: database.poc.io
   names:
     kind: XPostgreSQLInstance
-    plural: mydatabases
-  claimNames:
-    kind: PostgreSQLInstance
-    plural: postgresqlinstances
+    plural: xpostgresqlinstances
+    singular: xpostgresqlinstance
   versions:
     - name: v1alpha1
       served: true
