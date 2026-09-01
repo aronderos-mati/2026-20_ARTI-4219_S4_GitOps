@@ -12,18 +12,18 @@
 #   - Usar el grupo database.poc.io/v1alpha1
 # =====================================================================
 
-apiVersion: apiextensions.crossplane.io/v1
+apiVersion: apiextensions.crossplane.io/v2
 kind: CompositeResourceDefinition
 metadata:
   name: xpostgresqlinstances.database.poc.io
-  annotations:
-    argocd.argoproj.io/sync-wave: "1"
 spec:
   group: database.poc.io
   names:
     kind: XPostgreSQLInstance
     plural: xpostgresqlinstances
     singular: xpostgresqlinstance
+    shortNames:
+      - xpg
   versions:
     - name: v1alpha1
       served: true
@@ -32,20 +32,45 @@ spec:
         openAPIV3Schema:
           type: object
           properties:
-            spec:                     
-              type: object            
-              properties:             
-                parameters:
+            spec:
+              type: object
+              properties:
+                compositionSelector:
+                  type: object
+                compositionRef:
+                  type: object
+                writeConnectionSecretToRef:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    namespace:
+                      type: string
+                forProvider:
                   type: object
                   properties:
                     dbName:
                       type: string
-                      description: "Nombre de la base de datos a crear"
+                      description: "Nombre de la base de datos"
                     owner:
                       type: string
-                      description: "Propietario asignado a la base de datos"
-                  required:
-                    - dbName
-                    - owner
+                      description: "Usuario propietario de la base de datos"
+                    version:
+                      type: string
+                      description: "Versión de PostgreSQL"
               required:
-                - parameters
+                - forProvider
+            status:
+              type: object
+              properties:
+                conditions:
+                  type: array
+                  items:
+                    type: object
+      additionalPrinterColumns:
+        - name: DB
+          type: string
+          jsonPath: .spec.forProvider.dbName
+        - name: Owner
+          type: string
+          jsonPath: .spec.forProvider.owner

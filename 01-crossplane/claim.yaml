@@ -1,15 +1,17 @@
 # =====================================================================
-# Crossplane Claim — XPostgreSQLInstance
+#  Crossplane Claim — XPostgreSQLInstance
 # =====================================================================
-
 apiVersion: database.poc.io/v1alpha1
 kind: PostgreSQLInstance
 metadata:
-  name: mi-base-de-datos
+  name: dev-database
   namespace: default
   annotations:
     argocd.argoproj.io/sync-wave: "3"
 spec:
-  parameters:
-    dbName: "mi_app_db"
-    owner: "admin_user"
+  forProvider:
+    dbName: devdb-v3
+    owner: devteam
+  writeConnectionSecretToRef:
+    name: dev-database-conn
+    namespace: default

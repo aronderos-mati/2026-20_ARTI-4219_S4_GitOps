@@ -1,39 +1,37 @@
 # =====================================================================
 # Crossplane Composition
 # =====================================================================
-
 apiVersion: apiextensions.crossplane.io/v1
 kind: Composition
 metadata:
-  name: postgresql-composition
+  name: xpostgresqlinstance-composition
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   compositeTypeRef:
     apiVersion: database.poc.io/v1alpha1
     kind: XPostgreSQLInstance
   mode: Pipeline
   pipeline:
-  - step: patch-and-transform
-    functionRef:
-      name: function-patch-and-transform
-    input:
-      apiVersion: pt.fn.crossplane.io/v1beta1
-      kind: Resources
-      resources:
-      - name: postgresql-database
-        base:
-          apiVersion: postgresql.sql.crossplane.io/v1alpha
-          kind: Database
-          spec:
-            forProvider: {}
-            providerConfigRef:
-              name: postgresql-config
-        patches:
-          # Patch para el propietario
-          - type: FromCompositeFieldPath
-            fromFieldPath: "spec.parameters.owner"
-            toFieldPath: "spec.forProvider.owner"
-            
-          # Patch para el nombre de la BD
-          - type: FromCompositeFieldPath
-            fromFieldPath: "spec.parameters.dbName"
-            toFieldPath: "spec.forProvider.dbName"
+    - step: patch-and-transform
+      functionRef:
+        name: function-patch-and-transform
+      input:
+        apiVersion: pt.fn.crossplane.io/v1beta1
+        kind: Resources
+        resources:
+          - name: postgresql-database
+            base:
+              apiVersion: postgresql.postgresql.upbound.io/v1
+              kind: Database
+              spec:
+                forProvider: {}
+                providerConfigRef:
+                  name: postgresql-config
+            patches:
+              - type: FromCompositeFieldPath
+                fromFieldPath: "spec.forProvider.dbName"
+                toFieldPath: "spec.forProvider.dbName"
+              - type: FromCompositeFieldPath
+                fromFieldPath: "spec.forProvider.owner"
+                toFieldPath: "spec.forProvider.owner"
