@@ -12,6 +12,3 @@ spec:
   parameters:
     dbName: appdb-v2
     owner: devteam
-  writeConnectionSecretToRef:
-    name: dev-database-conn
-    namespace: default
