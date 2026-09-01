@@ -9,7 +9,7 @@ metadata:
 spec:
   compositeTypeRef:
     apiVersion: database.poc.io/v1alpha1
-    kind: Database
+    kind: XPostgreSQLInstance
   mode: Pipeline
   pipeline:
   - step: patch-and-transform
