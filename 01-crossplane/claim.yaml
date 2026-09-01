@@ -4,7 +4,7 @@
 apiVersion: database.poc.io/v1alpha1
 kind: PostgreSQLInstance
 metadata:
-  name: dev-database
+  name: dev-database-a
   namespace: default
   annotations:
     argocd.argoproj.io/sync-wave: "3"
